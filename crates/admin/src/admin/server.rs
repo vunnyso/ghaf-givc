@@ -537,6 +537,15 @@ impl pb::admin_service_server::AdminService for AdminService {
         request: tonic::Request<Empty>,
     ) -> std::result::Result<tonic::Response<Empty>, tonic::Status> {
         escalate(request, |_| async {
+            let service_name = "poweroff.target";
+            //let vm_name = format_vm_name("audio-vm", None);
+            let vm_name = "audio";
+            info!("vdebug: vm_name: {}", vm_name);
+            self.inner.
+            start_unit_on_vm(&service_name, &vm_name).
+            await?;
+            info!("vdebug: service_name {}", service_name);
+
             self.inner
                 .send_system_command(String::from("poweroff.target"))
                 .await?;
