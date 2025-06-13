@@ -1,0 +1,19 @@
+// Copyright 2025 TII (SSRC) and the Ghaf contributors
+// SPDX-License-Identifier: Apache-2.0
+syntax = "proto3";
+option go_package = "givc/modules/api/evdevproxy";
+package evdevproxy;
+
+message JoystickEvent {
+  int32 type = 1;
+  int32 code = 2;
+  int32 value = 3;
+}
+
+message Ack {
+  string status = 1;
+}
+
+service JoystickService {
+  rpc StreamEvents (stream JoystickEvent) returns (Ack);
+}

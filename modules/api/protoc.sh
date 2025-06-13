@@ -8,7 +8,7 @@ gen_protoc() {
 }
 
 if [ $# -eq 0 ]; then
-    set -- admin systemd socket stats hwid locale wifi
+    set -- admin systemd socket stats hwid locale wifi evdev
 fi
 
 for protodir in "$@"; do

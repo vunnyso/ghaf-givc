@@ -17,6 +17,7 @@ import (
 	givc_admin "givc/modules/api/admin"
 	givc_systemd "givc/modules/api/systemd"
 	givc_app "givc/modules/pkgs/applications"
+	givc_evdevproxy "givc/modules/pkgs/evdevproxy"
 	givc_grpc "givc/modules/pkgs/grpc"
 	givc_hwidmanager "givc/modules/pkgs/hwidmanager"
 	givc_localelistener "givc/modules/pkgs/localelistener"
@@ -276,6 +277,15 @@ func main() {
 
 			}(proxyConfig)
 		}
+	}
+
+	if agent.Name == "audio-vm" {
+		log.Infof("Audio-vm will act as producer / client")
+		givc_evdevproxy.NewEvdevProxyServer(false)
+	}
+	if agent.Name == "docker-vm" {
+		log.Infof("Docker-vm will act as consumer / server")
+		givc_evdevproxy.NewEvdevProxyServer(true)
 	}
 
 	// Register this instance
